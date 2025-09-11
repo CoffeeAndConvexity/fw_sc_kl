@@ -1,0 +1,36 @@
+      subroutine normalize_iter(M, B, n, k, num_epoch)
+      implicit none
+      integer n, k, num_epoch, i, j, t
+      double precision M(n,n), B(n,k), B_new(n,k)
+      double precision norm
+
+      do t = 1, num_epoch
+          do i = 1, n
+              do j = 1, k
+                  B_new(i,j) = 0.0d0
+                  do j2 = 1, n
+                      B_new(i,j) = B_new(i,j) + M(i,j2) * B(j2,j)
+                  end do
+              end do
+          end do
+
+          do i = 1, n
+              norm = 0.0d0
+              do j = 1, k
+                  norm = norm + B_new(i,j)**2
+              end do
+              norm = sqrt(norm)
+              if (norm .gt. 1.0d-12) then
+                  do j = 1, k
+                      B(i,j) = B_new(i,j) / norm
+                  end do
+              else
+                  do j = 1, k
+                      B(i,j) = 0.0d0
+                  end do
+              end if
+          end do
+      end do
+
+      return
+      end
