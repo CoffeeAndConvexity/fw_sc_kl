@@ -158,8 +158,8 @@ line_gfw,=plt.plot(common_time, mean_curve_cg,color = "green", linestyle = "dash
 # plt.plot(common_time, mean_curve_cg2,color = "purple", linestyle = "densely dotted", linewidth=2, label="CG + RTR")
 line_gfw_rtr,=plt.plot(common_time, mean_curve_cg2,color = "purple", linewidth=2, label="GFW & RTR", linestyle = "dashdot")
 line_admm,=plt.plot(common_time, mean_curve_admm,color = "black", linewidth=2, label="ADMM", dashes = (3, 5, 1, 2))
-line_cgal1,=plt.plot(common_time, mean_curve_cgal1,color = "aqua", linewidth=2, label="CGAL R=10 ", dashes = (1,1))
-line_cgal2,=plt.plot(common_time, mean_curve_cgal2,color = "deepskyblue", linewidth=2, label="CGAL R=100", dashes = (1,1))
+line_cgal1,=plt.plot(common_time, mean_curve_cgal1,color = "aqua", linewidth=2, label="SCGAL R=10 ", dashes = (1,1))
+line_cgal2,=plt.plot(common_time, mean_curve_cgal2,color = "deepskyblue", linewidth=2, label="SCGAL R=200", dashes = (1,1))
 line_lorads,=plt.plot(common_time, mean_curve_lorads,color = "magenta", linewidth=2, label="LoRADS*", dashes = (3, 5, 1, 2))
 
 
