@@ -7,7 +7,7 @@ clc
 rng(0,"twister");
 
 % n = 5000;
-n = 100;
+n = 20000;
 
 maxNumCompThreads(16)
 r = ceil(sqrt(2*n));
@@ -15,10 +15,11 @@ r = ceil(sqrt(2*n));
 % r = 500;
 
 % maxTime = 3; 
-maxTime = 1; 
+% no_runs = 2;
 
-no_runs = 2;
-% no_runs = 50;
+
+maxTime = 60; 
+no_runs = 50;
 
 opts = struct();
 opts.tolgradnorm = 1e-15;
