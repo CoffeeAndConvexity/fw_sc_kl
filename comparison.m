@@ -9,6 +9,7 @@ rng(0,"twister");
 % n = 5000;
 n = 100;
 
+maxNumCompThreads(16)
 r = ceil(sqrt(2*n));
 % r = 10;
 % r = 500;
@@ -41,20 +42,10 @@ for k=1:no_runs
     disp("--------------current iteration------------")
     k
     
-    % A = randn(n)/n;
-    % A = A+A';
-    % A = A + eye(n) * 50/n;
-    
-    A = zeros(n,n);
-    for i = 1:n
-        A(i,i) = (2 * randn()+500)/n;
-        for j = i+1:n
-            val = randn()/n;
-            A(i,j) = val;
-            A(j,i) = val;
-        end
-    end
-    
+    A = randn(n)/n;
+    A = A+A';
+    A = A + eye(n) * 50/n;
+
     r = ceil(sqrt(2*n));
 
     B = randn(n,r);
