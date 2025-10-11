@@ -52,15 +52,17 @@ mean_curve_cg1 = np.mean(interpolated_curve_cg1, axis=0)
 mean_curve_cg2 = np.mean(interpolated_curve_cg2, axis=0)
 mean_curve_cg3 = np.mean(interpolated_curve_cg3, axis=0)
 
+#%%
+
 fig0 = plt.figure(0)
 
-plt.plot(common_time, mean_curve_cg0,color = "black", linestyle = "solid", linewidth=2, label=r"$\sigma_1 = 0$")
-plt.plot(common_time, mean_curve_cg1,color='orange',  linestyle = "dotted", linewidth=2, label=r"$\sigma_2 = 10^{-3}$")
-plt.plot(common_time, mean_curve_cg2,color='red',     linestyle = "dashed", linewidth=2, label=r"$\sigma_3 = 25 \times 10^{-4}$")
-plt.plot(common_time, mean_curve_cg3,color = "green", linestyle = "dashdot", linewidth=2, label=r"$\sigma_4 = -\lambda_{min}(A) + 10^{-1}$")
+line1, = plt.plot(common_time, mean_curve_cg0,color = "black", linestyle = "solid", linewidth=2, label=r"$\sigma_1 = 0$")
+line2, = plt.plot(common_time, mean_curve_cg1,color='orange',  linestyle = "dotted", linewidth=2, label=r"$\sigma_2 = 10^{-3}$")
+line3, = plt.plot(common_time, mean_curve_cg2,color='red',     linestyle = "dashed", linewidth=2, label=r"$\sigma_3 = 25 \times 10^{-4}$")
+line4, = plt.plot(common_time, mean_curve_cg3,color = "green", linestyle = "dashdot", linewidth=2, label=r"$\sigma_4 = -\lambda_{min}(A) + 10^{-1}$")
 
 
-plt.xscale("log")
+# plt.xscale("log")
 
 plt.xlabel("Wall Time (s)",fontsize = 16)
 plt.ylabel("Objective Value",fontsize = 16)
@@ -84,10 +86,47 @@ plt.xlim((55,60))
 plt.ylim((mean_curve_cg1[-1]-ci,mean_curve_cg1[-1]+ci))
 
 plt.tight_layout()  # Automatically adjusts all margins
-
+plt.legend(handles=[line2,line3])
 # fig0.savefig("cg_sigma_comparison_T_"+str(num_curves)+"_last_second.png",format ="png")
 fig0.savefig("cg_sigma_comparison_T_"+str(num_curves)+"_last_second.eps",format ="eps")
 fig0.savefig("cg_sigma_comparison_T_"+str(num_curves)+"_last_second.pdf",format ="pdf")
 
 # fig0.savefig("cg_sigma_comparison_T_"+str(num_curves)+"_last_second.eps",format ="eps",bbox_inches='tight', pad_inches=0.05)
 # fig0.savefig("cg_sigma_comparison_T_"+str(num_curves)+"_last_second.pdf",format ="pdf",bbox_inches='tight', pad_inches=0.05)
+
+
+#%%
+
+fig1 = plt.figure(1)
+
+line1, = plt.plot(common_time, mean_curve_cg0,color = "black", linestyle = "solid", linewidth=2, label=r"$\sigma_1 = 0$")
+line2, = plt.plot(common_time, mean_curve_cg1,color='orange',  linestyle = "dotted", linewidth=2, label=r"$\sigma_2 = 10^{-3}$")
+line3, = plt.plot(common_time, mean_curve_cg2,color='red',     linestyle = "dashed", linewidth=2, label=r"$\sigma_3 = 25 \times 10^{-4}$")
+line4, = plt.plot(common_time, mean_curve_cg3,color = "green", linestyle = "dashdot", linewidth=2, label=r"$\sigma_4 = -\lambda_{min}(A) + 10^{-1}$")
+
+plt.xscale("log")
+
+plt.xlabel("Wall Time (s)",fontsize = 16)
+plt.ylabel("Objective Value",fontsize = 16)
+plt.grid(True)
+plt.legend()
+plt.show()
+plt.title(r"Effect of Choice of $\sigma$",fontsize = 18)
+
+plt.tight_layout()  # Automatically adjusts all margins
+
+fig1.savefig("cg_sigma_log_comparison_T_"+str(num_curves)+".eps",format ="eps")
+fig1.savefig("cg_sigma_log_comparison_T_"+str(num_curves)+".pdf",format ="pdf")
+
+
+ci = 1
+plt.xlim((55,60))
+plt.ylim((mean_curve_cg1[-1]-ci,mean_curve_cg1[-1]+ci))
+
+plt.tight_layout()  # Automatically adjusts all margins
+plt.legend(handles=[line2,line3]) 
+
+fig1.savefig("cg_sigma_log_comparison_T_"+str(num_curves)+"_last_second.eps",format ="eps")
+fig1.savefig("cg_sigma_log_comparison_T_"+str(num_curves)+"_last_second.pdf",format ="pdf")
+
+
