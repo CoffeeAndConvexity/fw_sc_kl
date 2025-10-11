@@ -3,6 +3,11 @@ clear all
 close all
 clc
 
+% add CGAL codes, note that we had to change the code a little bit to
+% compute feasible objective and enforce REAL WALLTIME, the code itself
+% uses totCpuTime but control message says "walltime achieved" not to
+% mention it also burdens itself with in between logging computations that
+% are not solver related in its original form. 
 addpath utils;
 addpath solver;
 
