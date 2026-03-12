@@ -137,16 +137,16 @@ interpolated_curve_lorads = np.array([
 ])
 
 
-mean_curve_bcm = np.mean(interpolated_curve_bcm, axis=0)
-mean_curve_bcm2 = np.mean(interpolated_curve_bcm2, axis=0)
-mean_curve_rgd = np.mean(interpolated_curve_rgd, axis=0)
-mean_curve_rtr = np.mean(interpolated_curve_rtr, axis=0)
-mean_curve_cg = np.mean(interpolated_curve_cg, axis=0)
-mean_curve_cg2 = np.mean(interpolated_curve_cg2, axis=0)
-mean_curve_admm = np.mean(interpolated_curve_admm, axis=0)
-mean_curve_cgal1 = np.mean(interpolated_curve_cgal1, axis=0)
-mean_curve_cgal2 = np.mean(interpolated_curve_cgal2, axis=0)
-mean_curve_lorads = np.mean(interpolated_curve_lorads, axis=0)
+mean_curve_bcm = -np.mean(interpolated_curve_bcm, axis=0)
+mean_curve_bcm2 = -np.mean(interpolated_curve_bcm2, axis=0)
+mean_curve_rgd = -np.mean(interpolated_curve_rgd, axis=0)
+mean_curve_rtr = -np.mean(interpolated_curve_rtr, axis=0)
+mean_curve_cg = -np.mean(interpolated_curve_cg, axis=0)
+mean_curve_cg2 = -np.mean(interpolated_curve_cg2, axis=0)
+mean_curve_admm = -np.mean(interpolated_curve_admm, axis=0)
+mean_curve_cgal1 = -np.mean(interpolated_curve_cgal1, axis=0)
+mean_curve_cgal2 = -np.mean(interpolated_curve_cgal2, axis=0)
+mean_curve_lorads = -np.mean(interpolated_curve_lorads, axis=0)
 
 fig0 = plt.figure(0)
 
@@ -183,20 +183,20 @@ fig0.savefig("cg_rtr_comparison_T_"+str(num_curves)+".pdf",format ="pdf")
 # fig0.savefig("cg_rtr_comparison_T_"+str(num_curves)+".pdf",format ="pdf",bbox_inches='tight', pad_inches=0.05)
 
 
-# plt.xlim((6,8))
+plt.xlim((6,8))
 
 
-# ci = 1
-# plt.xlim((55,60))
-# plt.ylim((mean_curve_rtr[-1]-ci,mean_curve_rtr[-1]+ci))
+ci = 1
+plt.xlim((55,60))
+plt.ylim((mean_curve_rtr[-1]-ci,mean_curve_rtr[-1]+ci))
 
-# plt.tight_layout()  # Automatically adjusts all margins
-# plt.legend(handles=[line_gfw_rtr,line_gfw,line_rtr,line_rgd,line_bcm2]) 
+plt.tight_layout()  # Automatically adjusts all margins
+plt.legend(handles=[line_gfw_rtr,line_gfw,line_rtr,line_rgd,line_bcm2]) 
 
-# # # fig0.savefig("cg_rtr_comparison_T_"+str(num_curves)+"_last_second.png",format ="png")
-# fig0.savefig("cg_rtr_comparison_T_"+str(num_curves)+"_last_second.eps",format ="eps")
-# fig0.savefig("cg_rtr_comparison_T_"+str(num_curves)+"_last_second.pdf",format ="pdf")
+# # fig0.savefig("cg_rtr_comparison_T_"+str(num_curves)+"_last_second.png",format ="png")
+fig0.savefig("cg_rtr_comparison_T_"+str(num_curves)+"_last_second.eps",format ="eps")
+fig0.savefig("cg_rtr_comparison_T_"+str(num_curves)+"_last_second.pdf",format ="pdf")
 
 
-# # fig0.savefig("cg_rtr_comparison_T_"+str(num_curves)+"_last_second.eps",format ="eps",bbox_inches='tight', pad_inches=0.05)
-# # fig0.savefig("cg_rtr_comparison_T_"+str(num_curves)+"_last_second.pdf",format ="pdf",bbox_inches='tight', pad_inches=0.05)
+# fig0.savefig("cg_rtr_comparison_T_"+str(num_curves)+"_last_second.eps",format ="eps",bbox_inches='tight', pad_inches=0.05)
+# fig0.savefig("cg_rtr_comparison_T_"+str(num_curves)+"_last_second.pdf",format ="pdf",bbox_inches='tight', pad_inches=0.05)

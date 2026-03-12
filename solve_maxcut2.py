@@ -1,11 +1,14 @@
 from numpy import random,zeros,argpartition,diag,ones,inf,roots,tensordot,eye,ceil,argmax,\
     array,fill_diagonal,outer,copy,emath,trace,sign,maximum,linspace,where
 from numpy.linalg import norm
-import time 
+import time
+import numpy as np
 
 import pymanopt
 from pymanopt.manifolds import Oblique
 from pymanopt.optimizers import TrustRegions
+
+# import matplotlib.pyplot as pylot
 
 def bcm_bm(M,w,B,maxtime,maxiter = 200):
     m,n = M.shape
@@ -64,6 +67,30 @@ def cg_bm(M,w,B,maxtime,maxiter = 500):
     return B,f_val,time_elapsed
 
 
+def cg_bm32(M,M64,w,B,maxtime,maxiter = 500):
+    f_val = zeros(maxiter +1)
+    time_elapsed = zeros(maxiter+1)
+    for t in range(1,maxiter+1):
+        t0 = time.time()
+        B = B.dot(M)
+        # B = B/norm(B,axis = 0) * w
+        B = B/norm(B,axis = 0)
+        t1 = time.time()
+        
+        BM = B.dot(M64)
+        f_val[t] = tensordot(B,BM)        
+        time_elapsed[t] = time_elapsed[t-1] + t1-t0
+        if time_elapsed[t] > maxtime:
+            break
+    
+    f_val = f_val[:t+1]
+    time_elapsed = time_elapsed[:t+1]
+    
+    # Z = B.T.dot(B)
+    # primals = ((Z * (Z.dot(M))).sum(axis = 0))/norm(Z,axis = 0) ** 2
+    # return B,Z,primals,f_val,time_elapsed
+    return B,f_val,time_elapsed
+
 # def cg_bm2(M,w,B,maxtime,maxiter = 500):
 #     f_val = zeros(maxiter +1)
 #     time_elapsed = zeros(maxiter+1)
@@ -113,13 +140,15 @@ def manopt(A,B,maxtime):
     )
     
     optimizer = TrustRegions(verbosity=2,max_time = maxtime)
+    optimizer._log_verbosity = 0
     solution = optimizer.run(problem,initial_point= B)
     # solution = optimizer.run(problem)
     return problem,optimizer,solution
 
 #%%
 
-n = 20000
+random.seed(0)
+n = 5000
 k = 50
 C = random.randn(n,n)/n
 
@@ -129,14 +158,22 @@ C = C + C.T + eye(n) * shift
 B0 = random.randn(k,n)
 B0 = B0/norm(B0,axis = 0)
 
+C_32 = C.astype(np.float32)
+B_32 = B0.astype(np.float32)
+
 #%%
 
-T = 60
+T = 5
 
-B1,f1,t1 = bcm_bm(C,ones(n),B0.copy(),maxtime =T,maxiter = 1000)
-B2,f2,t2 = cg_bm(C,ones(n),B0.copy(),maxtime =T,maxiter = 1000)
+# B1,f1,t1 = bcm_bm(C_32,ones(n),B_32.copy(),maxtime =T,maxiter = 4000)
+B2,f2,t2 = cg_bm32(C_32,C,ones(n),B_32.copy(),maxtime =T,maxiter = 4000)
+B3,f3,t3 = cg_bm(C,ones(n),B0.copy(),maxtime =T,maxiter = 4000)
 p,o,s = manopt(C,B0.copy(),maxtime = T)
+p32,o32,s32 = manopt(C_32,B_32.copy(),maxtime = T)
 
-print("bcm",f1[-1])
-print("cg",f2[-1])
-print("manopt",s.cost)
+#%%
+# print("bcm",f1[-1])
+print("cg32",f2[-1])
+print("cg64",f3[-1])
+print("manopt64",s.cost)
+print("manopt32",s32.cost)
